@@ -7,7 +7,7 @@ import os.path as osp
 import json
 import time
 import random
-import sys
+import math
 
 import _init_paths
 from loaders.dataloader_refined import DataLoader
@@ -15,12 +15,15 @@ import evals.utils as model_utils
 import evals.eval as eval_utils
 from opt import parse_opt
 from Config import *
+
 from layers.model_ema import EMA 
 from layers.model_teacher import TeacherModel
+from layers.distillation_utils import *
 
 import torch
 import torch.nn.functional as F
 import pdb
+os.environ["CUDA_VISIBLE_DEVICES"] = '3'
 
 def main(args):
     opt = vars(args)
@@ -29,9 +32,7 @@ def main(args):
     if not osp.isdir(checkpoint_dir):
         os.makedirs(checkpoint_dir)
     
-    teacher_model_dir = osp.join(opt['checkpoint_path'], opt['dataset_splitBy'], 'dtmr_new')
-    teacher_checkpoint_file = osp.join(teacher_model_dir, opt['id'] + '.pth')
-    student_checkpoint_file = osp.join(checkpoint_dir, opt['id'] + '_student' + '.pth')
+    student_checkpoint_file = osp.join(checkpoint_dir, opt['id'] + '.pth')
 
     opt['learning_rate'] = learning_rate
     opt['eval_every'] = eval_every
@@ -47,7 +48,7 @@ def main(args):
     torch.manual_seed(opt['seed'])
     random.seed(opt['seed'])
 
-    data_dir = '/home/mi/projects/own_project/WREG_py3/'
+    data_dir = '/home/imi1214/MJP/projects/'
     data_json = osp.join(data_dir, 'cache/prepro', opt['dataset_splitBy'], 'data.json')
     data_h5 = osp.join(data_dir, 'cache/prepro', opt['dataset_splitBy'], 'data.h5')
     sub_obj_wds = osp.join(data_dir, 'cache/sub_obj_wds', opt['dataset_splitBy'], 'sub_obj_wds.json')
@@ -58,12 +59,17 @@ def main(args):
     opt['vocab_size'] = loader.vocab_size                              # 1999
     opt['fc7_dim'] = 2048                                              # 2048
     opt['pool5_dim'] = 1024                                            # 1024
-    opt['num_atts'] = loader.num_atts                                  # 50
-    opt['distill_weight'] = 2
     opt['pair_feat_size'] = 5120
-    
+
+    opt['rectify'] = True
+    opt['dynamic_ratio'] = True
+    opt['strategy'] = 'entropy'
+    opt['select_ratio'] = 1
+
+    opt['distill_weight'] = 18
+        
     student_model = TeacherModel(opt)
-    
+
     student_infos = {}
     if opt['start_from'] is not None:
         pass
@@ -77,14 +83,8 @@ def main(args):
     if opt['load_best_score'] == 1:
         best_val_score = student_infos.get('best_val_score', None)
 
-    teacher_model = TeacherModel(opt)
-    checkpoint = torch.load(teacher_checkpoint_file)
-    teacher_model.load_state_dict(checkpoint['model'].state_dict())
-    teacher_model.eval()
-
     if opt['gpuid'] >= 0:
         student_model.cuda()
-        teacher_model.cuda()
 
     lr = opt['learning_rate']
     optimizer = torch.optim.Adam(student_model.parameters(),
@@ -92,19 +92,19 @@ def main(args):
                                 betas=(opt['optim_alpha'], opt['optim_beta']),
                                 eps=opt['optim_epsilon'],
                                 weight_decay=opt['weight_decay'])
-    
-    ema = EMA(student_model, 0.9997, buffer_ema=True)
 
     data_time, model_time = 0, 0
     start_time = time.time()
 
-    result_file = "./result_{}_{}_student.txt".format(opt['dataset_splitBy'], opt['exp_id'])
+    result_file = "./result_{}_{}.txt".format(opt['dataset_splitBy'], opt['exp_id'])
     f = open(result_file, "w")
     f.close()
 
     while True:
         torch.cuda.empty_cache()
         student_model.train()
+        ema = EMA( student_model, 0.999)
+        ema.register()
         optimizer.zero_grad()
 
         # data loading
@@ -126,18 +126,25 @@ def main(args):
         T['data'] = time.time() - tic
         tic = time.time()
 
-        scores, target_attn_s, loss, sub_loss, obj_loss, rel_loss = student_model(Feats['pool5'], sub_wordembs, sub_classembs, obj_wordembs, rel_wordembs,
+        scores, target_attn, loss, sub_loss, obj_loss, rel_loss = student_model(Feats['pool5'], sub_wordembs, sub_classembs, obj_wordembs, rel_wordembs,
                                                                     ann_pool5, ann_fc7, ann_fleats)
-        # Knowledge distillation
-        with torch.no_grad():
-            scores_t, target_attn, loss_t, sub_loss_t, obj_loss_t, rel_loss_t = teacher_model(Feats['pool5'], sub_wordembs, sub_classembs,
-                                                                                obj_wordembs, rel_wordembs, ann_pool5, ann_fc7, 
-                                                                                ann_fleats)
         
-        distillation_loss = ((scores - target_attn) ** 2).mean()
-        distillation_loss *= opt['distill_weight']
-        loss += loss + distillation_loss
+        if not opt['rectify']:
+            distillation_loss = ((scores - target_attn) ** 2).mean()
+        else:
+            if opt['dynamic_ratio']:
+                ratio = dynamic_entropy_ratio_new(target_attn)
+                indices = dynamic_data(target_attn, opt['strategy'], ratio)
+            
+            else:
+                ratio = opt['select_ratio']
+                indices = torch.arange(target_attn.size(0), device=target_attn.device)
+                indices = indices[: int(target_attn.size(0) * ratio)]
+
+            distillation_loss = ((scores[indices] -target_attn[indices]) ** 2).mean()
         
+        loss += loss + distillation_loss *  opt['distill_weight']
+
         try:
             loss.backward()
         except RuntimeError:
@@ -145,8 +152,7 @@ def main(args):
 
         model_utils.clip_gradient(optimizer, opt['grad_clip'])
         optimizer.step()
-        
-        ema.update_params()
+        ema.update()
             
         T['model'] = time.time() - tic
         wrapped = data['bounds']['wrapped']
@@ -207,7 +213,7 @@ def main(args):
             student_infos['opt'] = opt
             student_infos['val_result_history'] = val_result_history
 
-            with open(osp.join(checkpoint_dir, opt['id'] + '_student' + '.json'), 'w', encoding="utf8") as io:
+            with open(osp.join(checkpoint_dir, opt['id'] + '.json'), 'w', encoding="utf8") as io:
                 json.dump(student_infos, io)
 
         iter += 1
