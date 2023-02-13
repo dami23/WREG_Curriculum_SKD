@@ -75,9 +75,6 @@
 [skd_fixed_0.1_new]: [refcocog_google][val], id[skd_fixed_0.1_new]'s acc is 47.74%
 
 ==================================================================================
-==================================================================================
-these model are obtained by "selection_strategy == 'entropy':" in dynamic_data 
-
 [skd_dynamic_entropy_1]: [refcoco_unc][val], id[skd_dynamic_entropy_1]'s acc is 39.72%
 [skd_dynamic_entropy_1]: [refcoco_unc][testA], id[skd_dynamic_entropy_1]'s acc is 39.72%
 [skd_dynamic_entropy_1]: [refcoco_unc][testB], id[skd_dynamic_entropy_1]'s acc is 39.33%
