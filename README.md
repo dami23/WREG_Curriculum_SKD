@@ -1,4 +1,4 @@
-PyTorch  code for ['Weakly Supervised Referring Expression Grounding via Target-Guided Knowledge Distillation']. This paper has been accepted by ICRA 2023.
+PyTorch  code for ['Weakly Supervised Referring Expression Grounding via Dynamic Self-Knowledge Distillation']. This paper is submitted to IROS 2023.
 
 ### Preliminary
 1. Please refer to [MattNet](https://github.com/lichengunc/MAttNet) to install mask-faster-rcnn, REFER and refer-parser2. Follow Step 1 & 2 in Training to prepare the data and features.
@@ -17,21 +17,18 @@ The experiments are conducted on one GPU (NVIDIA RTX 3090ti).
    CUDA_VISIBLE_DEVICES={GPU_ID} python ./tools/extract_mrcn_ann_fc7_feats.py --dataset {DATASET} --splitBy {SPLITBY}
 
 ### Training and evaluation
-1. train the teacher model
+1. training
 
-   CUDA_VISIBLE_DEVICES={GPU_ID} python ./tools/train_teacher.py --dataset {DATASET} --splitBy {SPLITBY} --exp_id {EXP_ID}
+   CUDA_VISIBLE_DEVICES={GPU_ID} python ./tools/train_skd.py --dataset {DATASET} --splitBy {SPLITBY} --exp_id {EXP_ID}
 
-2. train the student model
 
-   CUDA_VISIBLE_DEVICES={GPU_ID} python ./tools/train_student.py --dataset {DATASET} --splitBy {SPLITBY} --exp_id {EXP_ID}
-
-3. evaluate the models,
+2. evaluate the models,
 
    CUDA_VISIBLE_DEVICES={GPU_ID} python ./tools/eval.py --dataset {DATASET} --splitBy {SPLITBY} --split {SPLIT} --id {EXP_ID}
 
    {DATASET} = refcoco, refcoco+, refcocog. {SPLITBY} = unc for refcoco and refcoco+, google for refcocog.
 
-4. the acquired results with different settings are listed in output/easy_results.txt
+3. the acquired results with different settings are listed in output/easy_results.txt
 
 ### Pretrained Models
 All pre-trained models and related data can be downloaded [here](https://drive.google.com/file/d/1PiFWptVi_kZe_hS7VsnMX__8iqYd6UX6/view?usp=sharing).
