@@ -143,7 +143,7 @@ def main(args):
 
             distillation_loss = ((scores[indices] -target_attn[indices]) ** 2).mean()
         
-        loss += loss + distillation_loss *  opt['distill_weight']
+        loss = loss + distillation_loss *  opt['distill_weight']
 
         try:
             loss.backward()
