@@ -31,7 +31,7 @@ The experiments are conducted on one GPU (NVIDIA RTX A6000).
    The acquired results with different settings are listed in output/easy_results.txt
 
 ### Pretrained Models
-All pre-trained models and related data can be downloaded [here](https://drive.google.com/file/d/1PiFWptVi_kZe_hS7VsnMX__8iqYd6UX6/view?usp=sharing).
+All trained models by the proposed approach can be downloaded [here](https://drive.google.com/file/d/1hnZf5wPklMyeUhH92cKsunMxr_2ZX6Tz/view?usp=share_link).
 
 ### Acknowledgement
 The code is based on [DTWREG](https://github.com/insomnia94/DTWREG/).
