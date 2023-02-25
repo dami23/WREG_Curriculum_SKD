@@ -20,59 +20,59 @@
 [okd_self_1_S]: [refcocog_google][val], id[okd_self_1_S]'s acc is 47.63%
 
 ==================================================================================
-[skd_fixed_0.9_new]: [refcoco_unc][val], id[skd_fixed_0.9_new]'s acc is 39.51%
-[skd_fixed_0.9_new]: [refcoco_unc][testA], id[skd_fixed_0.9_new]'s acc is 40.52%
-[skd_fixed_0.9_new]: [refcoco_unc][testB], id[skd_fixed_0.9_new]'s acc is 39.04%
+[skd_fixed_0.9]: [refcoco_unc][val], id[skd_fixed_0.9]'s acc is 39.51%
+[skd_fixed_0.9]: [refcoco_unc][testA], id[skd_fixed_0.9]'s acc is 40.52%
+[skd_fixed_0.9]: [refcoco_unc][testB], id[skd_fixed_0.9]'s acc is 39.04%
 
-[skd_fixed_0.9_new]: [refcoco+_unc][val], id[skd_fixed_0.9_new]'s acc is 39.66%
-[skd_fixed_0.9_new]: [refcoco+_unc][testA], id[skd_fixed_0.9_new]'s acc is 39.45%
-[skd_fixed_0.9_new]: [refcoco+_unc][testB], id[skd_fixed_0.9_new]'s acc is 40.38%
+[skd_fixed_0.9]: [refcoco+_unc][val], id[skd_fixed_0.9]'s acc is 39.66%
+[skd_fixed_0.9]: [refcoco+_unc][testA], id[skd_fixed_0.9]'s acc is 39.45%
+[skd_fixed_0.9]: [refcoco+_unc][testB], id[skd_fixed_0.9]'s acc is 40.38%
 
-[skd_fixed_0.9_new]: [refcocog_google][val], id[skd_fixed_0.9_new]'s acc is 47.41%
-
-==================================================================================
-[skd_fixed_0.7_new]: [refcoco_unc][val], id[skd_fixed_0.7_new]'s acc is 39.36%
-[skd_fixed_0.7_new]: [refcoco_unc][testA], id[skd_fixed_0.7_new]'s acc is 40.06%
-[skd_fixed_0.7_new]: [refcoco_unc][testB], id[skd_fixed_0.7_new]'s acc is 39.06%
-
-[skd_fixed_0.7_new]: [refcoco+_unc][val], id[skd_fixed_0.7_new]'s acc is 39.72%
-[skd_fixed_0.7_new]: [refcoco+_unc][testA], id[skd_fixed_0.7_new]'s acc is 39.96%
-[skd_fixed_0.7_new]: [refcoco+_unc][testB], id[skd_fixed_0.7_new]'s acc is 40.42%
-
-[skd_fixed_0.7_new]: [refcocog_google][val], id[skd_fixed_0.7_new]'s acc is 47.55%
+[skd_fixed_0.9]: [refcocog_google][val], id[skd_fixed_0.9]'s acc is 47.41%
 
 ==================================================================================
-[skd_fixed_0.5_new]: [refcoco_unc][val], id[skd_fixed_0.5_new]'s acc is 39.46%
-[skd_fixed_0.5_new]: [refcoco_unc][testA], id[skd_fixed_0.5_new]'s acc is 40.57%
-[skd_fixed_0.5_new]: [refcoco_unc][testB], id[skd_fixed_0.5_new]'s acc is 39.47%
+[skd_fixed_0.7]: [refcoco_unc][val], id[skd_fixed_0.7]'s acc is 39.36%
+[skd_fixed_0.7]: [refcoco_unc][testA], id[skd_fixed_0.7]'s acc is 40.06%
+[skd_fixed_0.7]: [refcoco_unc][testB], id[skd_fixed_0.7]'s acc is 39.06%
 
-[skd_fixed_0.5_new]: [refcoco+_unc][val], id[skd_fixed_0.5_new]'s acc is 39.74%
-[skd_fixed_0.5_new]: [refcoco+_unc][testA], id[skd_fixed_0.5_new]'s acc is 39.87%
-[skd_fixed_0.5_new]: [refcoco+_unc][testB], id[skd_fixed_0.5_new]'s acc is 40.52%
+[skd_fixed_0.7]: [refcoco+_unc][val], id[skd_fixed_0.7]'s acc is 39.72%
+[skd_fixed_0.7]: [refcoco+_unc][testA], id[skd_fixed_0.7]'s acc is 39.96%
+[skd_fixed_0.7]: [refcoco+_unc][testB], id[skd_fixed_0.7]'s acc is 40.42%
 
-[skd_fixed_0.5_new]: [refcocog_google][val], id[skd_fixed_0.5_new]'s acc is 47.50%
-
-==================================================================================
-[skd_fixed_0.3_new]: [refcoco_unc][val], id[skd_fixed_0.3_new]'s acc is 39.53%
-[skd_fixed_0.3_new]: [refcoco_unc][testA], id[skd_fixed_0.3_new]'s acc is 40.23%
-[skd_fixed_0.3_new]: [refcoco_unc][testB], id[skd_fixed_0.3_new]'s acc is 38.96%
-
-[skd_fixed_0.3_new]: [refcoco+_unc][val], id[skd_fixed_0.3_new]'s acc is 39.71%
-[skd_fixed_0.3_new]: [refcoco+_unc][testA], id[skd_fixed_0.3_new]'s acc is 39.40%
-[skd_fixed_0.3_new]: [refcoco+_unc][testB], id[skd_fixed_0.3_new]'s acc is 40.23%
-
-[skd_fixed_0.3_new]: [refcocog_google][val], id[skd_fixed_0.3_new]'s acc is 47.56%
+[skd_fixed_0.7]: [refcocog_google][val], id[skd_fixed_0.7]'s acc is 47.55%
 
 ==================================================================================
-[skd_fixed_0.1_new]: [refcoco_unc][val], id[skd_fixed_0.1_new]'s acc is 39.02%
-[skd_fixed_0.1_new]: [refcoco_unc][testA], id[skd_fixed_0.1_new]'s acc is 39.97%
-[skd_fixed_0.1_new]: [refcoco_unc][testB], id[skd_fixed_0.1_new]'s acc is 38.76%
+[skd_fixed_0.5]: [refcoco_unc][val], id[skd_fixed_0.5]'s acc is 39.46%
+[skd_fixed_0.5]: [refcoco_unc][testA], id[skd_fixed_0.5]'s acc is 40.57%
+[skd_fixed_0.5]: [refcoco_unc][testB], id[skd_fixed_0.5]'s acc is 39.47%
 
-[skd_fixed_0.1_new]: [refcoco+_unc][val], id[skd_fixed_0.1_new]'s acc is 39.60%
-[skd_fixed_0.1_new]: [refcoco+_unc][testA], id[skd_fixed_0.1_new]'s acc is 39.84%
-[skd_fixed_0.1_new]: [refcoco+_unc][testB], id[skd_fixed_0.1_new]'s acc is 39.95%
+[skd_fixed_0.5]: [refcoco+_unc][val], id[skd_fixed_0.5]'s acc is 39.74%
+[skd_fixed_0.5]: [refcoco+_unc][testA], id[skd_fixed_0.5]'s acc is 39.87%
+[skd_fixed_0.5]: [refcoco+_unc][testB], id[skd_fixed_0.5]'s acc is 40.52%
 
-[skd_fixed_0.1_new]: [refcocog_google][val], id[skd_fixed_0.1_new]'s acc is 47.74%
+[skd_fixed_0.5]: [refcocog_google][val], id[skd_fixed_0.5]'s acc is 47.50%
+
+==================================================================================
+[skd_fixed_0.3]: [refcoco_unc][val], id[skd_fixed_0.3]'s acc is 39.53%
+[skd_fixed_0.3]: [refcoco_unc][testA], id[skd_fixed_0.3]'s acc is 40.23%
+[skd_fixed_0.3]: [refcoco_unc][testB], id[skd_fixed_0.3]'s acc is 38.96%
+
+[skd_fixed_0.3]: [refcoco+_unc][val], id[skd_fixed_0.3]'s acc is 39.71%
+[skd_fixed_0.3]: [refcoco+_unc][testA], id[skd_fixed_0.3]'s acc is 39.40%
+[skd_fixed_0.3]: [refcoco+_unc][testB], id[skd_fixed_0.3]'s acc is 40.23%
+
+[skd_fixed_0.3]: [refcocog_google][val], id[skd_fixed_0.3]'s acc is 47.56%
+
+==================================================================================
+[skd_fixed_0.1]: [refcoco_unc][val], id[skd_fixed_0.1]'s acc is 39.02%
+[skd_fixed_0.1]: [refcoco_unc][testA], id[skd_fixed_0.1]'s acc is 39.97%
+[skd_fixed_0.1]: [refcoco_unc][testB], id[skd_fixed_0.1]'s acc is 38.76%
+
+[skd_fixed_0.1]: [refcoco+_unc][val], id[skd_fixed_0.1]'s acc is 39.60%
+[skd_fixed_0.1]: [refcoco+_unc][testA], id[skd_fixed_0.1]'s acc is 39.84%
+[skd_fixed_0.1]: [refcoco+_unc][testB], id[skd_fixed_0.1]'s acc is 39.95%
+
+[skd_fixed_0.1]: [refcocog_google][val], id[skd_fixed_0.1]'s acc is 47.74%
 
 ==================================================================================
 [skd_dynamic_entropy_1]: [refcoco_unc][val], id[skd_dynamic_entropy_1]'s acc is 39.72%
