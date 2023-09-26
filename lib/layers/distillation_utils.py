@@ -3,16 +3,6 @@ import torch.nn as nn
 import torch.nn.functional as F
 import pdb
 
-def dynamic_entropy_ratio(logits):
-    MLP_module = nn.Sequential(nn.Linear(logits.size(0), 1),
-                                   nn.Sigmoid()).cuda()
-    sigmoid = nn.Sigmoid()
-
-    entropy = - torch.sum(logits* torch.log(logits), dim=1)
-    threshold = sigmoid(MLP_module(entropy))
-
-    return threshold  
-  
 def dynamic_data(logits, selection_strategy, selection_ratio):
     bsz = logits.size(0)
 
@@ -23,9 +13,19 @@ def dynamic_data(logits, selection_strategy, selection_ratio):
         
     elif selection_strategy == 'entropy-r':
         probs = F.softmax(logits, dim=-1)
-        entropy = -torch.sum(probs * torch.log(probs), dim=1)  # select most certain data
+        entropy = -torch.sum(probs * torch.log(probs), dim=1)  # select most certain data .ceil()
         _, indices = torch.sort(entropy, descending=False)
-
-    indices = indices[: int(bsz * selection_ratio)]
     
-    return indices
+    inx_num = int(bsz * selection_ratio)
+    indices_h = indices[: inx_num]
+    indices_l = indices[inx_num :]
+
+    return indices_h, indices_l
+
+def dynamic_ratio(logits):
+    probs = F.softmax(logits, dim=-1)  
+    entropy = - torch.sum(probs * torch.log(probs), dim=1)
+    avg_prob = 1 /logits.size(1) * torch.ones((1, logits.size(1)))
+    threshold = - entropy / torch.sum(avg_prob * torch.log(avg_prob))
+
+    return threshold.mean()
